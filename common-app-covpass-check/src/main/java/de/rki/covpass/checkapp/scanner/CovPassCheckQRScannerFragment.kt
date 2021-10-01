@@ -40,6 +40,7 @@ internal class CovPassCheckQRScannerFragment :
     }
 
     override fun onValidationSuccess(certificate: CovCertificate) {
+        println("**************************************************************************\n*                             Scanner Worked                             *\n**************************************************************************")
         findNavigator().push(
             ValidationResultSuccessNav(
                 certificate.fullName,
