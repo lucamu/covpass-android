@@ -6,6 +6,8 @@
 package de.rki.covpass.checkapp.validation
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -25,6 +27,9 @@ import de.rki.covpass.sdk.utils.hoursTillNow
 import de.rki.covpass.sdk.utils.toDeviceTimeZone
 import kotlinx.parcelize.Parcelize
 import java.time.ZonedDateTime
+
+
+
 
 /**
  * Interface to get notified when the validation result fragment was closed.
@@ -86,6 +91,13 @@ internal abstract class ValidationResultFragment : BaseBottomSheet() {
         if (textFooter != null) {
             binding.resultInfoFooter.text = textFooter
         }
+        //
+        val updateHandler = Handler(Looper.getMainLooper())
+        val runnable = Runnable{
+            findNavigator().popUntil<MainFragment>()
+        }
+        updateHandler.postDelayed(runnable,5000)
+
     }
 
     override fun onBackPressed(): Abortable {
