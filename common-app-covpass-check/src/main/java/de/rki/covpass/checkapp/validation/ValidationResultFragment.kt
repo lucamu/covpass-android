@@ -94,9 +94,10 @@ internal abstract class ValidationResultFragment : BaseBottomSheet() {
         //
         val updateHandler = Handler(Looper.getMainLooper())
         val runnable = Runnable{
-            findNavigator().popUntil<MainFragment>()
+            triggerBackPress()
+        //findNavigator().popUntil<MainFragment>()
         }
-        updateHandler.postDelayed(runnable,5000)
+        updateHandler.postDelayed(runnable,2000)
 
     }
 
