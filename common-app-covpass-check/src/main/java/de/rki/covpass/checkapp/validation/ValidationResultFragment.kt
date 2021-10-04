@@ -5,6 +5,7 @@
 
 package de.rki.covpass.checkapp.validation
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -46,6 +47,9 @@ internal abstract class ValidationResultFragment : BaseBottomSheet() {
     override val heightLayoutParams: Int by lazy { ViewGroup.LayoutParams.MATCH_PARENT }
 
     private val binding by viewBinding(ValidationResultBinding::inflate)
+
+    private lateinit var mediaPlayer: MediaPlayer
+
 
     abstract val title: String
     abstract val text: String
@@ -91,14 +95,17 @@ internal abstract class ValidationResultFragment : BaseBottomSheet() {
         if (textFooter != null) {
             binding.resultInfoFooter.text = textFooter
         }
-        //
+        // Added by Stefan Hoffmeister for autocolosing fragment
         val updateHandler = Handler(Looper.getMainLooper())
         val runnable = Runnable{
             triggerBackPress()
-        //findNavigator().popUntil<MainFragment>()
         }
-        updateHandler.postDelayed(runnable,2000)
-
+        updateHandler.postDelayed(runnable,1000)
+        //Init sound and play it
+        //R.drawable.result_success_image
+        val audioFile = if(imageRes == R.drawable.result_success_image) R.raw.success else R.raw.error
+        mediaPlayer = MediaPlayer.create(this.context, audioFile)
+        mediaPlayer.start()
     }
 
     override fun onBackPressed(): Abortable {
